@@ -224,7 +224,7 @@ var lace = {
 	//
 	//	Set a value at key.
 	//
-	//	If you would like to have the value you've just set returned, use #setget.
+	//	If you would like to have the value you've just set returned, use #getset.
 	//	Otherwise, `this` (Lace) is returned.
 	//
 	set : function(key, value, obj) {

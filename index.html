@@ -88,8 +88,7 @@
 			.error(function() {
 				console.log(this);
 			})
-			
-			//
+
 			//	Routes can be assigned custom triggers.
 			//	These triggers are accessible to ANY route (a sort of mixin).
 			//	(a message will appear in console on page load)
@@ -101,6 +100,13 @@
 			})
 			.route("/custom/route", "update", {
 				data: "This is some data from custom method 'update'"
+			})
+			
+			//	Routes with variables
+			//
+			.open("/create/user/:usernmae")
+			.click(function(username) {
+				console.log("New user: " + username);
 			})
 
 			//	Branching logic
@@ -191,6 +197,7 @@
 					<li class="active"><a href="#" data-action="mouseover/nav/mover mouseout/nav/mout">Mousey</a></li>
 					<li><a href="#" data-action="click/nav/click">Click</a></li>
 					<li><a href="#" data-action="mousedown/nav/all mouseup/nav/all dblclick/nav/all">Action</a></li>
+					<li><a href="#" data-action="click/create/user/jack">Variables</a></li>
 				</ul>
 			</div><!--/.nav-collapse -->
 		</div>
