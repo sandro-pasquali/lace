@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Lace</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		
+		<!-- Le styles -->
+		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<style type="text/css">
+		  body {
+			padding-top: 60px;
+			padding-bottom: 40px;
+		  }
+		  .sidebar-nav {
+			padding: 9px 0;
+		  }
+		
+		  @media (max-width: 980px) {
+			/* Enable use of floated navbar text */
+			.navbar-text.pull-right {
+			  float: none;
+			  padding-left: 5px;
+			  padding-right: 5px;
+			}
+		  }
+		</style>
+		<link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+		
+		<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+		<!--[if lt IE 9]>
+		  <script src="bootstrap/js/html5shiv.js"></script>
+		<![endif]-->
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+		<script src="lace.js"></script>
+		<script src="bootstrap/js/bootstrap.min.js"></script>
+	
+		<script>
+	
+			//	Bootstrap is for demo of UI events and has exactly zero relevance
+			//	to this library ('lace' notwithstanding)
+			//
+			//	Click, mouseover, etc on the nav to fire some of the routes defined below.
+			//
+			
+			//	Establish a library object
+			//
+			lace
+
+			//	"Click"
+			//
+			.open('/nav/click')
+			.times(2)	// only run twice. #close'd following. Click it a few times.
+			.click(function() {
+				console.log(this);
+				lace.route('/demo/errorhandler', {
+					error: "Damn!"
+				});
+			})
+			
+			//	"Mousey"
+			//
+			.open('/nav/mover')
+			.mouseover(function() {
+				console.log('mouseover A');
+			})	
+			.mouseover(function() {
+				console.log('mouseover B');
+			})	
+			
+			.open('/nav/mout')
+			.mouseout(function() {
+				console.log('mouseout');
+			})	
+			
+			//	"Action"
+			//
+			.open('/nav/all')
+			.action(function(action) {
+				console.log(action);
+			})
+			
+			//	Routes can pass an object with an #error property
+			//
+			.open('/demo/errorhandler')
+			.error(function() {
+				console.log(this);
+			})
+			
+			//
+			//	Routes can be assigned custom triggers.
+			//	These triggers are accessible to ANY route (a sort of mixin).
+			//	(a message will appear in console on page load)
+			//
+			.addRouteEvent("update")
+			.open("/custom/route")
+			.update(function() {
+				console.log(this);
+			})
+			.route("/custom/route", "update", {
+				data: "This is some data from custom method 'update'"
+			})
+
+			//	Branching logic
+			//	Either send a condition function
+			//	or send a value that makes truthy sense
+			//
+			.branch(function() {
+				console.log("should branch")
+			}, true)
+			
+			.branch(function() {
+				console.log("should not have branched");
+			}, function() {
+				return false;
+			})
+			
+			//	A straightforward data store, with typical array methods
+			//
+			.set("new.object.path.of.any.length", [2,4,8,16,32])
+			.get("new.object.path.of.any.length", function(got) {
+				
+				console.log("got")
+				console.log(got);
+				
+				lace.set("shorter", "Another value")
+				console.log(lace.get("shorter")); // Another value
+				
+				//	Manipulation
+				//
+				lace.push("new.object.path.of.any.length", 64, 128);
+				console.log("push")
+				console.log(lace.get("new.object.path.of.any.length"));
+				
+				//	Value path discovery
+				//
+				
+				//	Find the path to an object containing specified k/v pair
+				//
+				lace.set("pairings.roundA", {
+					"bob" 	: "jack",
+					"mary"	: "sam",
+					"bob"	: "mary",
+					"sam"	: "jack"
+				})
+				
+				lace.set("pairings.roundB", {
+					"bob" 	: "jack",
+					"mary"	: "sam"
+				})
+
+				lace.set("pairings.roundC", {
+					"bob" 	: "jack",
+					"mary"	: "sam",
+					"bob"	: "mary"
+				})
+				
+				console.log("Where do bob and mary play?");
+				var loc = lace.locate("bob","mary");
+				console.log(loc);
+				console.log(loc.paths);
+				
+				//	Find the path to a specific value (use a function)
+				//	(this is searching the entire STORE)
+				//
+				console.log("Where is 16?");
+				console.log(lace.find(16).first);
+			})
+		
+		</script>
+		
+	</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="navbar-inner">
+		<div class="container-fluid">
+			<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="brand" href="#">Project name</a>
+			<div class="nav-collapse collapse">
+				<p class="navbar-text pull-right">
+				Logged in as <a href="#" class="navbar-link">Username</a>
+				</p>
+				<ul class="nav">
+					<li class="active"><a href="#" data-action="mouseover/nav/mover mouseout/nav/mout">Mousey</a></li>
+					<li><a href="#" data-action="click/nav/click">Click</a></li>
+					<li><a href="#" data-action="mousedown/nav/all mouseup/nav/all dblclick/nav/all">Action</a></li>
+				</ul>
+			</div><!--/.nav-collapse -->
+		</div>
+	</div>
+</div>
+
+<div class="container-fluid">
+	<div class="row-fluid">
+		HI
+	</div>
+</div>
+
+</body>
+</html>
+
+</body>
+</html>
