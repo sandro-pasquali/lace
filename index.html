@@ -102,9 +102,9 @@
 				data: "This is some data from custom method 'update'"
 			})
 			
-			//	Routes with variables
+			//	Routes with variables. Handler receives them in order.
 			//
-			.open("/create/user/:usernmae")
+			.open("/create/user/:username")
 			.click(function(username) {
 				console.log("New user: " + username);
 			})
