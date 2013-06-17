@@ -49,11 +49,6 @@ var ACTION_SELECTOR	= "[data-action]";
 
 //	##ITERATOR
 //
-//	Returns accumulator as modified by passed selective function.
-//	This is used by #arrayMethod in cases where there is not a native implementation
-//  for a given array method (#map, #filter, etc). It's a fallback, in other words,
-//  and hopefully will go vestigial over time.
-//
 //	Also used by #iterate, being a general iterator over either objects or arrays.
 //	NOTE: It is usually more efficient to write your own loop.
 //
